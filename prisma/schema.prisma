@@ -1,0 +1,21 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model tbl_books {
+  isbn        String  @id @db.VarChar(13)
+  title       String  @db.VarChar(50)
+  author      String  @db.VarChar(50)
+  publisher   String  @db.VarChar(50)
+  price       Int?
+  discount    Int?
+  description String? @db.VarChar(4000)
+  pubdate     String? @db.VarChar(10)
+  link        String? @db.VarChar(125)
+  image       String? @db.VarChar(125)
+}
