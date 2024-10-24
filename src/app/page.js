@@ -32,6 +32,22 @@ const HomePage = () => {
       }
     }
   };
+  // 책 정보 저장 버튼을 눌렀을 때 실행
+  const saveBook = async (book) => {
+    try {
+      const response = await fetch("/api/book", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(book),
+      });
+      const data = await response.json();
+      console.log("책 저장 성공!:", data);
+    } catch (error) {
+      console.log("책 저장 실패", error);
+    }
+  };
   return (
     <>
       <header>
@@ -86,7 +102,7 @@ const HomePage = () => {
                     <img src={result.image}></img>
                     <p>
                       제목:
-                      <Link href={`/books/${result.isbn}`}>{result.title}</Link>
+                      <Link href={result.link}>{result.title}</Link>
                     </p>
                     <p>저자: {result.author}</p>
                     <p>출판사: {result.publisher}</p>
@@ -94,6 +110,7 @@ const HomePage = () => {
                     <p>출판일: {result.pubdate}</p>
                     <p>가격: {result.discount}</p>
                     <p>식별코드:{result.isbn}</p>
+                    <button onClick={() => saveBook(result)}>저장</button>
                   </>
                 )}
               </li>
